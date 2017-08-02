@@ -37,10 +37,6 @@ class SearchBook extends Component {
       books: []
   }
 
-  updateBook = (query) => {
-      
-  }
-
   render() {
     const { books } = this.state
     const { onUpdateBook } = this.props
