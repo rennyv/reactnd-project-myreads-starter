@@ -4,10 +4,6 @@ import Book from './Book.js'
 import * as BookAPI from './BooksAPI.js'
 
 class SearchBook extends Component {
-  updateBook = (book, shelf) => {
-    
-  }
-
   updateQuery = (e) => {
     const { currentSearch } = this.state
     const searchTerms = e.trim()
@@ -47,7 +43,7 @@ class SearchBook extends Component {
 
   render() {
     const { books } = this.state
-
+    const { onUpdateBook } = this.props
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -66,7 +62,7 @@ class SearchBook extends Component {
             <li key={book.id}>
               <Book 
                 book={ book }
-                onUpdateBook={ this.onUpdateBook }
+                onUpdateBook={ onUpdateBook }
               />
             </li>
           ))}
