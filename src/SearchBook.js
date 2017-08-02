@@ -2,8 +2,13 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Book from './Book.js'
 import * as BookAPI from './BooksAPI.js'
+import PropTypes from 'prop-types'
 
 class SearchBook extends Component {
+  static propTypes = {
+      onUpdateBook: PropTypes.func.isRequired
+  }
+
   updateQuery = (e) => {
     const { currentSearch } = this.state
     const searchTerms = e.trim()
@@ -27,7 +32,7 @@ class SearchBook extends Component {
     } else {
       this.setState({
         currentSearch: '',
-      books: []
+        books: []
       })
     }
   }
