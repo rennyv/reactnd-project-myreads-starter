@@ -10,8 +10,19 @@ class BooksApp extends React.Component {
     books: []
   }
 
+  validateBook = (book) => {
+    if(!book.authors){
+      book.authors = []
+    }
+    if(!book.imageLinks) { book.imageLinks = {thumbnail: ''} }
+    if(!book.imageLinks.thumbnail) { book.imageLinks.thumbnail = '' }
+
+    return book
+  }
+
   componentDidMount = () => {
     BooksAPI.getAll().then((books) => {
+      books = books.map(b => this.validateBook(b))
       this.setState({books})
     })
   }
@@ -22,7 +33,7 @@ class BooksApp extends React.Component {
     book.shelf = shelf
 
     this.setState((state) => ({
-      books: books.filter(b => b.id !== book.id).concat([book])
+      books: books.filter(b => b.id !== book.id).concat([this.validateBook(book)])
     }))
     BooksAPI.update(book, shelf)
   }
