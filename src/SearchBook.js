@@ -18,16 +18,25 @@ class SearchBook extends Component {
     }
   }
 
-  removeDups = (books) => {
+  cleanUp = (books) => {
     let clean = []
+     
     books.forEach((book) => { 
       if (!(clean.some((c) => c.id === book.id) )){
-         console.log("" + book.title + ":" + book.shelf)
-         clean.push(book) 
-      } else {
-        console.log("!" + book.title + ":" + book.shelf)
-      }
+        if(!book.authors){
+          book.authors = []
+        }
         
+        if(!book.imageLinks) { book.imageLinks = {thumbnail: ''} }
+        if(!book.imageLinks.thumbnail) { book.imageLinks.thumbnail = '' }
+        
+        let shelfBook = this.props.books.find((b) => b.id === book.id)
+        if (shelfBook) {
+          book.shelf = shelfBook.shelf
+        }
+        
+        clean.push(book) 
+      } 
     })
     return clean 
   }
@@ -40,7 +49,7 @@ class SearchBook extends Component {
       BookAPI.search(e, 1).then((books) => {
         if(books && currentSearch !== searchTerms){
           if(!books.error){
-            let bookResults = this.removeDups(books)
+            let bookResults = this.cleanUp(books)
             this.updateBooks(bookResults, searchTerms)
           } else {
             this.updateBooks([],searchTerms)
