@@ -1,6 +1,13 @@
-This is the starter template for the final assessment project for Udacity's React Fundamentals course, developed by [React Training](https://reacttraining.com). The goal of this template is to save you time by providing a static example of the CSS and HTML markup that may be used, but without any of the React code that is needed to complete the project. If you choose to start with this template, your job will be to add interactivity to the app by refactoring the static code in this template.
+I statered with the starter template for Udacity's React Fundamentals course, developed by [React Training](https://reacttraining.com). I created a front-end in React to view your books that you want to read, currently reading, and have read.  I have also added the ability to add new books to your shelves.
 
-Of course, you are free to start this project from scratch if you wish! Just be sure to use [Create React App](https://github.com/facebookincubator/create-react-app) to bootstrap the project.
+## Installation
+
+* Clone from Github.
+* Run `npm install`
+
+## Running Application
+
+* Run `npm run start`
 
 ## Backend Server
 
