@@ -9,6 +9,29 @@ class SearchBook extends Component {
       onUpdateBook: PropTypes.func.isRequired
   }
 
+  updateBooks = (books, terms) => {
+    if (this.state.books !== books){
+      this.setState({
+        books,
+        currentSearch: terms
+      })
+    }
+  }
+
+  removeDups = (books) => {
+    let clean = []
+    books.forEach((book) => { 
+      if (!(clean.some((c) => c.id === book.id) )){
+         console.log("" + book.title + ":" + book.shelf)
+         clean.push(book) 
+      } else {
+        console.log("!" + book.title + ":" + book.shelf)
+      }
+        
+    })
+    return clean 
+  }
+
   updateQuery = (e) => {
     const { currentSearch } = this.state
     const searchTerms = e.trim()
@@ -17,23 +40,15 @@ class SearchBook extends Component {
       BookAPI.search(e, 1).then((books) => {
         if(books && currentSearch !== searchTerms){
           if(!books.error){
-            this.setState({
-                books: books,
-                currentSearch: searchTerms
-            })
+            let bookResults = this.removeDups(books)
+            this.updateBooks(bookResults, searchTerms)
           } else {
-            this.setState({
-                books: [],
-                currentSearch: searchTerms
-            })
+            this.updateBooks([],searchTerms)
           }
         }
       })
     } else {
-      this.setState({
-        currentSearch: '',
-        books: []
-      })
+      this.updateBooks([],'')
     }
   }
 
@@ -60,7 +75,7 @@ class SearchBook extends Component {
       <div className="search-books-results">
         <ol className="books-grid">
           {books.map((book) => (
-            <li key={book.id}>
+            <li key={book.id + "-" + book.title + "-" + book.shelf}>
               <Book 
                 book={ book }
                 onUpdateBook={ onUpdateBook }
