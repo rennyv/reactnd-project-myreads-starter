@@ -17,6 +17,9 @@ class BooksApp extends React.Component {
     if(!book.imageLinks) { book.imageLinks = {thumbnail: ''} }
     if(!book.imageLinks.thumbnail) { book.imageLinks.thumbnail = '' }
 
+    //add unique key to the book
+    book.simpleKey = book.id + "-" + book.industryIdentifiers[0].identifier
+
     return book
   }
 
@@ -41,11 +44,7 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        <Route exact path="/" render={() => (
-          <BookList 
-            books={ this.state.books }
-            onUpdateBook={this.updateBook} /> 
-        )}/>
+        <Route exact path="/" component={() => (<BookList books={ this.state.books } onUpdateBook={this.updateBook} /> )} /> 
         <Route path="/search" render={({ history }) => (
           <SearchBook onUpdateBook={this.updateBook} />
         )}/>       
