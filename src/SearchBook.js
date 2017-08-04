@@ -6,7 +6,8 @@ import PropTypes from 'prop-types'
 
 class SearchBook extends Component {
   static propTypes = {
-      onUpdateBook: PropTypes.func.isRequired
+      onUpdateBook: PropTypes.func.isRequired,
+      books: PropTypes.array.isRequired
   }
 
   updateBooks = (books, terms) => {
@@ -32,9 +33,10 @@ class SearchBook extends Component {
         
         let shelfBook = this.props.books.find((b) => b.id === book.id)
         if (shelfBook) {
-          book.shelf = shelfBook.shelf
+         book.shelf = shelfBook.shelf
+        } else {
+          book.shelf = 'none'
         }
-        
         clean.push(book) 
       } 
     })
